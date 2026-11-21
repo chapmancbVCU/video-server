@@ -1,0 +1,1298 @@
+---
+layout: default
+title: "Form Globals"
+parent: "Global Helpers"
+nav_order: 1
+---
+
+# Form Globals
+## Table of contents
+1. [Overview](#overview)
+2. [button()](#button)
+3. [buttonBlock()](#buttonBlock)
+4. [checkboxLabelLeft()](#checkboxLabelLeft)
+5. [checkboxLabelRight()](#checkboxLabelRight)
+6. [checkboxGroup()](#checkboxGroup)
+7. [csrf()](#csrf)
+8. [datalists](#datalists)
+    * A. [dataListColor()](#dataListColor)
+    * B. [dataListDate()](#dataListDate)
+    * C. [dataListDateTimeLocal()](#dataListDateTimeLocal)
+    * D. [dataListInterval()](#dataListInterval)
+    * E. [dataListMonth()](#dataListMonth)
+    * F. [dataListText()](#dataListText)
+    * G. [dataListTime()](#dataListTime)
+    * H. [dataListWeek()](#dataListWeek)
+9. [errorBag()](#errorBag)
+10. [hidden()](#hidden)
+11. [input()](#input)
+    * A. [color()](#color)
+    * B. [confirm()](#confirm)
+    * C. [currency()](#currency)
+    * D. [dateSelector()](#dateSelector)
+    * E. [dateTimeLocal()](#dateTimeLocal)
+    * F. [email()](#email)
+    * G. [fileSelector()](#fileSelector)
+    * H. [imageButton()](#imageButton)
+    * I. [imageBlock()](#imageBlock)
+    * J. [interval()](#interval)
+    * K. [month()](#month)
+    * L. [number()](#number)
+    * M. [password()](#password)
+    * N. [search()](#search)
+    * O. [tel()](#tel)
+    * P. [text()](#text)
+    * Q. [textArea](#textArea)
+    * R. [timeSelector()](#timeSelector)
+    * S. [urlInput()](#urlInput)
+    * T. [week()](#week)
+12. [output()](#output)
+13. [Radio Buttons](#radio)
+14. [rememberMe()](#rememberMe)
+15. [select()](#select)
+16. [submitBlock()](#submitBlock)
+17. [submitTag()](#submitTag)
+
+<br>
+
+## 1. Overview <a id="overview"></a>
+Chappy.php has a rich library of form globals.  Many are wrappers of existing functions in the `FormHelper` class.  17 of them leverage the original `FormHelper::InputBlock` function.  There are also specialized functions for radio buttons, checkboxes, option select, currency, and numbers.
+
+<br>
+
+## 2. `button()` <a id="button"></a>
+This function creates a button with no surrounding HTML div element. It supports the ability to set attributes such as classes and event handlers. If you want a div to surround a button along with any other attributes we recommend that you use the buttonBlock function. Note the example function call shown below:
+
+```php
+button(
+  "Click Me!", 
+  ['class' => 'btn btn-large btn-primary', 'onClick' => 'alert(\'Hello World!\')']
+);
+```
+
+Parameters: 
+- `string $buttonText` - The contents of the button's label.
+- `array $inputAttrs` - This parameter is used to set values for attributes such as classes for styling, front-side validation, and event handlers. Make sure when performing an event handler function call that contains strings as arguments to escape any quotes. The default value is an empty array.
+
+Returns:
+- An HTML button element with its label set and any other optional attributes set.
+
+<br>
+
+## 3. `buttonBlock()` <a id="buttonBlock"></a>
+The buttonBlock function is a wrapper for the button function that adds a div around the button element. An example function call is shown below.
+
+```php
+buttonBlock(
+  "Click Me!", 
+  ['class' => 'btn btn-large btn-primary', 'onClick' => 'alert(\'Hello World!\')'], 
+  ['class' => 'form-group']
+);
+```
+
+Parameters:
+- `string $buttonText` - The contents of the button's label.
+- `array $inputAttrs` - This parameter is used to set values for attributes such as classes for styling, front-side validation, and event handlers. Make sure when performing an event handler function call that contains strings as arguments to escape any quotes. The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+
+Returns:
+- `string` - An HTML div surrounding a button element with its label set and any other optional attributes set.
+
+<br>
+
+## 4. `checkboxLabelLeft()` <a id="checkboxLabelLeft"></a>
+Generates a checkbox where the label is on the left side. It generates a div element that surrounds a label and input of type checkbox. This is ideal for situations where labels can be of varying lengths. An example function call is shown below.
+
+```php
+checkboxLabelLeft(
+  'Remember Me', 
+  'remember_me', 
+  'on', 
+  $this->login->getRememberMeChecked(), 
+  [], 
+  ['class' => 'form-group'], $this->displayErrors
+);
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes for this input.
+- `string $value` - The value we want to set.  We can use this to set  the value of the value attribute during form validation.  Default value  is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `bool $checked` - The value for the checked attribute.  If true  this attribute will be set as checked="checked".  The default value is false.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and the input element of type checkbox.
+
+<br>
+
+## 5. `checkboxLabelRight()` <a id="checkboxLabelRight"></a>
+Generates a checkbox where the label is on the right side. It generates a div element that surrounds a label and input of type checkbox. An example function call from the login view is shown below.
+
+```php
+checkboxLabelRight(
+  'Remember Me', 
+  'remember_me', 
+  'on', 
+  $this->login->getRememberMeChecked(), 
+  [], 
+  ['class' => 'form-group mr-1'], $this->displayErrors
+);
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes for this input.
+- `string $value` - The value we want to set.  We can use this to set  the value of the value attribute during form validation.  Default value  is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `bool $checked` - The value for the checked attribute.  If true  this attribute will be set as checked="checked".  The default value is false.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and the input element of type checkbox.
+
+<br>
+
+## 6. `checkboxGroup()` <a id="checkboxGroup"></a>
+Renders a group of checkboxes sharing one name (submitted as name[]), one wrapping div, and ONE error span. Label-right per box.
+
+Example:
+
+```php
+<?= checkboxGroup(
+  'acls',
+  $this->acls,              // [value => label] map of all ACLs
+  $this->user->getAcls(),   // the set of ACLs this user currently has
+  [],
+  ['class' => 'form-check'],
+  $this->displayErrors
+); ?>
+```
+
+Parameters:
+- `string $name` - Group name WITHOUT '[]' (added internally), e.g. 'acls'.
+- `array $options` - [value => label] map of choices. 
+- `array $selectedValues` - Values that should render checked (the current set).
+- `array $inputAttrs` - Passthrough attrs applied to every box (error-classed once here).
+- `array $divAttrs` - Attrs for the group's wrapping div.
+- `array $errors` - Errors array; one invalid-feedback span for the whole group.
+
+Returns:
+- `string` - The checkbox group.
+
+<br>
+
+## 7. `csrf()` <a id="csrf"></a>
+Inserts csrf token into form.
+
+Returns: 
+- string The hidden input of type hidden with the generated token set as the value.
+
+<br>
+
+## 8. `datalists()` <a id="datalists"></a>
+This section contains a listing of input functions paired with a datalist for suggestions.
+
+Parameters common among all of these functions are:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes for this input.
+- `string $listName` - The list name  and id for the datalist element.
+- `mixed $value` - The value we want to set.  We can use this to set the value of the value attribute during form validation.  Default value is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `array $options` - A list of suggestions.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+<br>
+
+### A. `dataListColor()` <a id="dataListColor"></a>
+Renders an HTML div element that surrounds an input of type color with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListColor(
+    'Pick a color:', 
+    'color', 
+    'colors', 
+    '', 
+    ['#800000', '#8B0000', '#A52A2A', '#DC143C'], 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dataListColor(
+    string $label, 
+    string $name, 
+    string $listName,
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type color.
+
+<br>
+
+### B. `dataListDate()` <a id="dataListDate"></a>
+Renders an HTML div element that surrounds an input of type date with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListDate(
+    'Start date:', 
+    'date', 
+    'dates', 
+    '', 
+    ['2026-10-07', '2026-10-08', '2026-10-09', '2026-10-10'], 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dataListDate(
+    string $label, 
+    string $name, 
+    string $listName,
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type date.
+
+<br>
+
+### C. `dataListDateTimeLocal()` <a id="dataListDateTimeLocal"></a>
+Renders an HTML div element that surrounds an input of type datetime-local with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListDateTimeLocal(
+    'Start date:', 
+    'date', 
+    'dates', 
+    '', 
+    ['2026-10-07T14:05', '2026-10-08T06:44', '2026-10-09T20:20', '2026-10-1009:56'], 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dataListDateTimeLocal(
+    string $label, 
+    string $name, 
+    string $listName,
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type datetime-local.
+
+<br>
+
+### D. `dataListInterval()` <a id="dataListInterval"></a>
+Renders an HTML div element that surrounds an input of type range with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListInterval(
+    'Tip amount:', 
+    'tick', 
+    'tickmarks', 
+    0,
+    45,
+    '', 
+    ['0' => '0%', '10' => 'minimum', '20' => 'standard', '30' => 'generous', '50' => 'very generous'], 
+    [], 
+    ['class' => 'form-group mb-3 d-flex flex-column']) 
+?>
+```
+
+Signature:
+```php
+function dataListInterval(
+    string $label, 
+    string $name, 
+    string $listName,
+    int|float $min,     // The minimum value for the interval.
+    int|float $max,     // The maximum value for the interval.
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+<br>
+
+### E. `dataListMonth()` <a id="dataListMonth"></a>
+Renders an HTML div element that surrounds an input of type month with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListMonth(
+    'Select a month:', 
+    'month', 
+    'months', 
+    '', 
+    ['2026-09', '2026-10', '2026-11', '2026-12'], 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dataListMonth(
+    string $label, 
+    string $name, 
+    string $listName,
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type month.
+
+<br>
+
+### F. `dataListText()` <a id="dataListText"></a>
+Renders an HTML div element that surrounds an input of type text with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListText(
+    'Select an animal:', 
+    'animal', 
+    'animals', 
+    '', 
+    ['Cat', 'Dog', 'Cow', 'Fish'], 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dataListText(
+    string $label, 
+    string $name, 
+    string $listName,
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type text.
+
+<br>
+
+### G. `dataListTime()` <a id="dataListTime"></a>
+Renders an HTML div element that surrounds an input of type time with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListTime(
+    'Select a time:', 
+    'time', 
+    'times', 
+    '', 
+    ['12:00', '13:00', '14:00', '15:00'], 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dataListTime(
+    string $label, 
+    string $name, 
+    string $listName,
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type time.
+
+<br>
+
+### H. `dataListWeek()` <a id="dataListWeek"></a>
+Renders an HTML div element that surrounds an input of type week with an accompanying datalist of suggestions.
+
+Example:
+```php
+<?= dataListWeek(
+    'Select an week:', 
+    'week', 
+    'weeks', 
+    '', 
+    ['min' => '2026-32', 'max' => '2026-36'], 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dataListWeek(
+    string $label, 
+    string $name, 
+    string $listName,
+    mixed $value = '', 
+    array $options = [],
+    array $inputAttrs = [], 
+    array $divAttrs = [],
+    array $errors=[]
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type week.
+
+<br>
+
+## 9. `errorBag()` <a id="errorBag"></a>
+Returns list of errors.  A wrapper for the `FormHelper::displayErrors()` function.
+
+Parameter:
+- `array|ArraySet $errors` - A list of errors and their description that is generated during server side form validation.
+
+Returns:
+- `string` - A string representation of a div element containing an input of type checkbox.
+
+<br>
+
+## 10. `hidden()` <a id="hidden"></a>
+Generates a hidden element. An example function call is shown below in figure 7:
+
+Example:
+```php
+hidden("example_name", "example_value");
+```
+
+This function accepts 2 arguments as described below:
+1. $name sets the value for the name, for, and id attributes.
+2. $value The value for the value attribute.
+
+<br>
+
+## 11. `input()` <a id="input"></a>
+This section contains a listing of input functions that are wrappers for the HTML input element.
+
+Parameters common among all of these functions are:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes for this input.
+- `string $listName` - The list name  and id for the datalist element.
+- `mixed $value` - The value we want to set.  We can use this to set the value of the value attribute during form validation.  Default value is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `array $options` - A list of suggestions.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+<br>
+
+### A. `color()` <a id="color"></a>
+Renders an HTML div element that surrounds an input of type color.
+
+Signature:
+```php
+function color(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type color.
+
+<br>
+
+### B. `confirm()` <a id="confirm"></a>
+Renders an HTML div element that surrounds an input of type password confirm.  The built-in contract assumes that "confirm" is the name of the field.
+
+Example:
+```php
+<?= confirm(
+     "Confirm Password", 
+     $this->user->confirm, 
+     ['class' => 'form-control input-sm'], 
+     ['class' => 'form-group mb-3']) 
+?>
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `mixed $value` - The value we want to set.  We can use this to set the value of the value attribute during form validation.  Default value is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and the input element of type password.
+
+<br>
+
+### C. `currency()` <a id="currency"></a>
+Renders an HTML div element that surrounds an input of type currency.
+
+Example:
+```php
+<?= currency(
+    label: 'Amount',
+    name: "amount",
+    inputAttrs: ['class' => 'form-control input-sm'],
+    divAttrs: ['class' => 'form-group mb-3']
+) ?>
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes for this input.
+- `string $intlNumberFormat` - The international number format.
+- `string $currency` - The 3 digit currency name.
+- `mixed $value` - The value we want to set.  We can use this to set  the value of the value attribute during form validation.  Default value  is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and the input element of type text for currency.
+
+<br>
+
+### D. `dateSelector()` <a id="dateSelector"></a>
+Renders an HTML div element that surrounds an input of type date.
+
+Signature:
+```php
+function dateSelector(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type date.
+
+<br>
+
+### E. `dateTimeLocal()` <a id="dateTimeLocal"></a>
+Renders an HTML div element that surrounds an input of type datetime-Local.
+
+Example:
+```php
+<?= dateTimeLocal(
+     'Start date:', 
+     'date', 
+     '',
+     ['class' => 'form-control input-sm'], 
+     ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function dateTimeLocal(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type datetime-local.
+
+<br>
+
+### F. `email()` <a id="email"></a>
+Renders an HTML div element that surrounds an input of type email.
+
+Example:
+```php
+<?= email(
+    "Email", 
+    'email', 
+    $this->user->email, 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']) 
+?>
+```
+
+Signature:
+```php
+function email(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type email.
+
+<br>
+
+### G. `fileSelector()` <a id="fileSelector"></a>
+Renders an HTML div element that surrounds an input of type file.
+
+**Multiple File Uploads:**
+
+Use the $multiple flag to enable multiple file uploads.  Name attribute 
+will be formatted correctly and the multiple attribute will be added to 
+the input element.
+
+Example:
+
+```php
+<?= fileSelector(
+     "Upload Profile Image (Optional)", 
+     'profileImage', 
+     ['class' => 'form-control', 'accept' => 'image/gif image/jpeg image/png'], 
+     ['class' => 'form-group mb-3']) 
+?>
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes for this input.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `bool $multiple` - Flag for turning on or off multiple file uploads.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and the input element of type file.
+
+<br>
+
+### H. `imageButton()` <a id="imageButton"></a>
+Create a input element of type image.
+
+Example:
+
+```php
+<?= imageButton(
+     'submit', 
+     asset('public/logo.png', true), 
+     100, 
+     50, 
+     ['class' => 'mt-5 pt-4']
+?>
+```
+
+Parameters:
+- `string $id` - The id attribute for the image input.
+- `string $src` - The path to the image file.
+- `int $width` - The width of the image.
+- `int $height` - The hight of the image.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+
+Returns:
+- `string` - An input element of type image.
+
+<br>
+
+### I. `imageBlock()` <a id="imageBlock"></a>
+Renders an HTML div element that surrounds an input of type image.
+
+Example:
+```php
+<?= image(
+     'submit', 
+     asset('public/logo.png', true), 
+     100, 
+     50, 
+     ['class' => 'mt-5 pt-4'], 
+     ['class' => 'text-end'])
+?>
+```
+
+Parameters:
+- `string $id` - The id attribute for the image input.
+- `string $src` - The path to the image file.
+- `int $width` - The width of the image.
+- `int $height` - The hight of the image.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- ``array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+
+Returns:
+- `string` - An input element of type image.
+
+<br>
+
+### J. `interval()` <a id="interval"></a>
+Renders an HTML div element that surrounds an input of type interval.
+
+Example:
+```php
+<?= interval(
+    'Tip amount:', 
+    'tick', 
+    0,
+    45,
+    '', 
+    [], 
+    ['class' => 'form-group mb-3 d-flex flex-column']) 
+?>
+```
+
+Signature:
+```php
+function interval(
+    string $label,
+    string $name,
+    int|float $min,     // The minimum value for the interval.
+    int|float $max,     // The maximum value for the interval.
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+<br>
+
+### K. `month()` <a id="month"></a>
+Renders an HTML div element that surrounds an input of type month.
+
+Example:
+```php
+<?= month(
+    'Select a month:', 
+    'month', 
+    '', 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function month(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type month.
+
+<br>
+
+### L. `number()` <a id="number"></a>
+Numeric input (integer or decimal) with optional thousands grouping
+and fixed precision.
+
+Config keys (all optional):
+
+| Key | Type(s) | Description |
+|:---:|:-------:|-------------|
+|  `decimals`    | `int`                    | Decimal places. 0 = integer. Default 0. |
+|  `useGrouping` | `bool`                   | Thousands separators on display. Default false. |
+|  `min`         | `int|float|null`         | HTML min. Default null (omitted). |
+|  `max`         | `int|float|null`         | HTML max. Default null (omitted). |
+|  `step`        | `int|float|string|null`  | HTML step. Default derived from decimals. |
+|  `locale`      | `string`                 | Intl locale for formatting. Default 'en-US'. |
+
+Stores normalized (raw number, no separators); displays formatted.
+
+Examples:
+
+```php
+<?= number('Integer', 'int_demo', 42, ['decimals' => 0]); ?>
+
+<?= number('2-decimal, grouped', 'price_demo', 1234.5,
+      ['decimals' => 2, 'useGrouping' => true]); ?>
+
+<?= number('2-decimal, no grouping', 'plain_demo', 1234.5,
+      ['decimals' => 2, 'useGrouping' => false]); ?>
+
+<?= number('3-decimal precision', 'precise_demo', 3.14159,
+      ['decimals' => 3, 'useGrouping' => true]); ?>
+
+<?= number('With min/max', 'bounded_demo', 50,
+      ['decimals' => 0, 'min' => 0, 'max' => 100]); ?>
+
+<?= number('Empty (create mode)', 'empty_demo', '',
+    ['decimals' => 2, 'useGrouping' => true]); ?>
+
+<?= number(
+   'Amount',
+    "amount",
+    '',
+    [
+        'decimals' => 2,        // 0 = integer, N = float precision
+        'useGrouping' => true,  // thousands separators on/off
+        'min' => 0,
+        'max' => 1000000,
+        'step' => 0.01,
+    ],
+   ['class' => 'form-control input-sm'],
+   ['class' => 'form-group mb-3']
+) ?>
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes  for this input.
+- `mixed $value` - The value we want to set.  We can use this to set  the value of the value attribute during form validation.  Default value  is the empty string.  It can be set with values during form validation  and forms used for editing records.
+- `array $config` - Array of optional keys.
+- `array $inputAttrs` - The values used to set the class and other  attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other  attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array. 
+
+Returns:
+- `string` - A surrounding div and a formatted number input field.
+
+<br>
+
+### M. `password()` <a id="password"></a>
+Renders an HTML div element that surrounds an input of type password.
+
+Example:
+```php
+<?= password(
+    'Password', 
+    'password', 
+    $this->login->password,
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']) 
+?>
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `mixed $value` - The value we want to set.  We can use this to set the value of the value attribute during form validation.  Default value is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and the input element of type password.
+
+<br>
+
+### N. `search()` <a id="search"></a>
+Renders an HTML div element that surrounds an input of type search.
+
+Example:
+```php
+<?= search(
+    "Search", 
+    'search', 
+    '', 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']) 
+?>
+```
+
+Signature:
+```php
+function search(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type search.
+
+<br>
+
+### O. `tel()` <a id="tel"></a>
+Renders an HTML div element that surrounds an input of type tel.
+
+Example:
+```php
+tel(
+    'Home phone', 
+    'phone',
+    $this->contact->phone, 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+);
+```
+
+Signature:
+```php
+function search(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type tel.
+
+<br>
+
+### P. `text()` <a id="text"></a>
+Renders an HTML div element that surrounds an input of type text.
+
+Signature:
+```php
+function text(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type text.
+
+<br>
+
+### Q. `textArea()` <a id="textArea"></a>
+Assists in the development of textarea in forms. It accepts parameters for setting attribute tags in the form section.  An example function call is shown below:
+
+```php
+<!-- Add this to the head section -->
+<?php $this->start('head') ?>
+<?= loadTinyMCE() ?>
+<?php $this->end() ?>
+
+<!-- The function call -->
+<?= textArea("Description", 
+    'description', 
+    $this->user->description, 
+    ['class' => 'form-control input-sm', 'placeholder' => 'Describe yourself here...'], 
+    ['class' => 'form-group mb-3']); 
+?>
+
+<!-- Wait until content is loaded before we initialize script -->
+<?= initTinyMCE('description') ?>
+```
+
+Parameters:
+- `string $label`  Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes  for this input.
+- `string|null $value` - The value we want to set.  We can use this to set the value of the value attribute during form validation.  Default value is the empty string.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and the textarea element.
+
+<br>
+
+### R. `timeSelector()` <a id="timeSelector"></a>
+Renders an HTML div element that surrounds an input of type time.
+
+Example:
+```php
+<?= timeSelector(
+    'Select a time:', 
+    'time', 
+    '', 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function timeSelector(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type time.
+
+<br>
+
+### S. `urlInput()` <a id="urlInput"></a>
+Renders an HTML div element that surrounds an input of type url.
+
+Example:
+```php
+<?= urlInput(
+    "URL", 
+    'url', 
+    '', 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']) 
+?>
+```
+
+Signature:
+```php
+function urlInput(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type url.
+
+<br>
+
+### T. `week()` <a id="week"></a>
+Renders an HTML div element that surrounds an input of type week.
+
+Example:
+```php
+<?= week(
+    'Select an week:', 
+    'week', 
+    '', 
+    ['class' => 'form-control input-sm'], 
+    ['class' => 'form-group mb-3']
+) ?>
+```
+
+Signature:
+```php
+function week(
+    string $label,
+    string $name,
+    mixed $value = '',
+    array $inputAttrs = [],
+    array $divAttrs = [],
+    array $errors = []
+): string
+```
+
+Returns:
+- `string` - A surrounding div and the input element of type week.
+
+<br>
+
+## 12. `output()` <a id="output"></a>
+
+Generates an HTML output element. The output element is a container that can inject the results of a calculator or the outcome of a user action.
+
+Example:
+```php
+output("my_name", "for_value")
+```
+
+Parameters:
+- `string` - $name Sets the value for the name attributes for this input.
+- `string` - $for Sets the value for the for attribute.
+
+Returns:
+- `string` - The HTML output element.
+
+<br>
+
+## 13. `Radio Buttons` <a id="radio"></a>
+We support radio button groups that allow users to populate the input using information from your database.
+
+Example:
+
+```php
+<?= radioGroup(
+    'inactive',                       // name
+    [0 => 'Active', 1 => 'Inactive'], // [value => label] map
+    $this->user->inactive,            // selected value: 0 or 1
+    ['class' => 'form-check-input'],  // inputAttrs (applied to every radio)
+    ['class' => 'form-group mb-3'],   // divAttrs
+    $this->displayErrors              // errors
+); ?>
+```
+
+Parameters:
+- `string $name`-  Sets the value for the name attribute for this input.
+- `array $options`-  The list of options we will use to populate the radio group.
+- `string|int|bool $selectedValue`-  The selected value.
+- `array $inputAttrs`-  The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs`-  The values used to set the class and other  attributes of the surrounding div.  The default value is an empty array.
+- `array $errors`-  The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and option select element.
+
+<br>
+
+**`radio()`**
+Creates an input element of type radio with an accompanying label element.
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name attribute for this input.
+- `string $value` - The value we want to set.  We can use this to set the value of the value attribute during form validation.  It can be set with values during form validation and forms used for editing records.
+- `bool $checked` - The value for the checked attribute.  If true this attribute will be set as checked="checked".  The default value is false.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+
+Returns:
+- `string` - The HTML input element of type radio.
+
+The example code below demonstrates how a radio button are used.
+```php
+radio('HTML', 'html', 'fav_language', "HTML", $check1, ['class' => 'form-group mr-1']); 
+radio('CSS', 'css', 'fav_language', "CSS", $check2, ['class' => 'form-group mr-1']);
+```
+
+<br>
+
+## 14. `rememberMe()` <a id="rememberMe"></a>
+Generates a div containing an input of type checkbox with the label to 
+the left that is not part of a group.
+
+Example:
+<?= rememberMe(
+     'Remember Me', 
+     $this->login->getRememberMeChecked(), 
+     [], 
+     ['class' => 'form-group mb-3']); 
+?>
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `bool $checked` - The value for the checked attribute.  If true this attribute will be set as checked="checked".  The default value is false.  It can be set with values during form validation and forms used for editing records.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+
+Returns
+- `string` - A surrounding div and the input element of type checkbox.
+
+<br>
+
+## 15. `select()` <a id="select"></a>
+HTML `<select>` elements are supported with the calls to the `FormHelper::selectBlock` function.
+
+Example:
+
+```php
+<?= select(
+    'Account Status',                 // label
+    'inactive',                       // name — matches the schema column
+    $this->user->inactive,            // current value: 0 or 1
+    [0 => 'Active', 1 => 'Inactive'], // [value => label] map
+    ['class' => 'form-select'],       // inputAttrs
+    ['class' => 'form-group mb-3'],   // divAttrs
+    $this->displayErrors              // errors
+); ?>
+```
+
+Parameters:
+- `string $label` - Sets the label for this input.
+- `string $name` - Sets the value for the name, for, and id attributes for this input.
+- `string $value` - The value we want to set as selected.
+- `array $options` - The list of options we will use to populate the select option dropdown.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+- `array $errors` - The errors array.  Default value is an empty array.
+
+Returns:
+- `string` - A surrounding div and option select element.
+
+<br>
+
+## 16. `submitBlock()` <a id="submitBlock"></a>
+Generates a div containing an input of type submit.
+
+Example:
+```php
+submitBlock(
+    "Save", 
+    ['class'=>'btn btn-primary'], ['class'=>'text-end']
+);
+```
+Parameters:
+- `string $buttonText` - Sets the value of the text describing the button.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+- `array $divAttrs` - The values used to set the class and other attributes of the surrounding div.  The default value is an empty array.
+
+Returns:
+- `string` -  A surrounding div and the input element of type submit.
+
+<br>
+
+## 17. `submitTag()` <a id="submitTag"></a>
+Create a input element of type submit.
+
+Example:
+```php
+submitTag(
+    "Save", 
+    ['class'=>'btn btn-primary']
+);
+```
+
+Parameters:
+- `string $buttonText` - Sets the value of the text describing the button.
+- `array $inputAttrs` - The values used to set the class and other attributes of the input string.  The default value is an empty array.
+
+Returns:
+- `string` -  A surrounding div and the input element of type submit.

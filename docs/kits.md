@@ -1,0 +1,42 @@
+---
+layout: default
+title: "Development Experience (Kits)"
+parent: "Getting Started"
+nav_order: 1
+---
+
+# Development Experience (Kits)
+## Table of contents
+1. [Overview](#overview)
+2. [Additional Commands](#additional-commands)
+
+<br>
+
+## 1. Overview <a id="overview"></a>
+Chappy.php supports a pure PHP or React.js or hybrid experience.  Run the following commands to get setup:
+- `kit:php` - Generates views, components, and controllers for a PHP experience.
+- `kit:react` - Generates views, components, and controllers for a React.js experience.
+
+If neither is used then the framework defaults to built-in controllers, views, and components.
+
+<br>
+
+## 2. Additional Commands <a id="additional-commands"></a>
+Build your experience piece-meal with the commands described in the table below:
+
+| Command | Description | Arguments |
+|:-------:|-------------|-----------|
+| `generate:admin` | Generates admin dashboard controllers and views. | `--react` |
+| `generate:admin:controller` | Generates admin dashboard controller. | `--react` |
+| `generate:admin:view` | Generates admin dashboard views. | `--react` |
+| `generate:auth` | Generates auth controllers and views. | `--react` |
+| `generate:auth:controller` | Generates auth controller. | `--react` |
+| `generate:auth:views` | Generates auth views. | `--react` |
+| `generate:home` | Generates home controllers and views. | `--react` |
+| `generate:home:controller` | Generates home controller. | `--react` |
+| `generate:home:view` | Generates home index view. | `--react` |
+| `generate:profile` | Generates profile controllers and views. | `--react` |
+| `generate:profile:controller` | Generates profile controller. | `--react` |
+| `generate:profile:views` | Generates profile views.| `--react` |
+
+Each command has a `--react` flag that can be used to deploy the controller or views you want for building a React.js based app.
