@@ -8,7 +8,7 @@ use Core\Model;
 class Video extends Model {
 
     // Fields you don't want saved on form submit
-    // public const blackList = ['id', 'deleted'];
+    public const blackList = ['id', 'deleted'];
 
     // Fields you want fillable by a form
     // public const whiteList = ['field_one', 'field_two'];
@@ -17,13 +17,13 @@ class Video extends Model {
     protected static string $_table = 'video';
 
     // Soft delete
-    // protected static bool $_softDelete = true;
+    protected static bool $_softDelete = true;
     
     // Date casting for toArray() and JSON output
-    // protected array $casts = [
-    //     'created_at' => 'datetime',
-    //     'updated_at' => 'datetime',
-    // ];
+    protected array $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
     
     // List your allowed file types.
     protected static array $allowedFileTypes = [];
@@ -35,7 +35,11 @@ class Video extends Model {
     protected static string $_uploadPath = "";
     
     // Fields from your database
-
+    public int $deleted = 0;
+    public int $id;
+    public ?string $name = null;
+    public ?string $url = null;
+    public int $user_id;
 
     public function afterDelete(): void {
         // Implement your function
