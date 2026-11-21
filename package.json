@@ -38,6 +38,7 @@
     "bootstrap": "^5.3.3",
     "dompurify": "^3.4.16",
     "font-awesome": "^4.7.0",
+    "hls.js": "^1.7.4",
     "jquery": "^3.7.1",
     "jquery-ui": "^1.14.1",
     "jquery-ui-dist": "^1.13.3",
