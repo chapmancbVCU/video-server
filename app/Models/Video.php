@@ -26,20 +26,32 @@ class Video extends Model {
     ];
     
     // List your allowed file types.
-    protected static array $allowedFileTypes = [];
+    protected static array $allowedFileTypes = [
+        'video/mp4',                            // MP4 (MPEG-4)
+        'video/x-msvideo',                      // AVI
+        'video/x-ms-wmv',                       // WMV
+        'video/webm',                           // WEBM
+        'video/ogg',                            // OGG Video
+        'video/quicktime',                      // MOV (Apple QuickTime)
+        'video/x-flv'
+    ];
     
-    // Set your max file size.
-    protected static int $maxAllowedFileSize = 5242880;
+    // 500MB limit
+    protected static int $maxAllowedFileSize = 5242880000;
 
     // Set your file path.  Include your bucket if necessary.
     protected static string $_uploadPath = "";
     
     // Fields from your database
     public int $deleted = 0;
+    public ?string $description = null;
+    public int $height;
     public int $id;
+    public ?string $length = null;
     public ?string $name = null;
     public ?string $url = null;
     public int $user_id;
+    public int $width;
 
     public function afterDelete(): void {
         // Implement your function
