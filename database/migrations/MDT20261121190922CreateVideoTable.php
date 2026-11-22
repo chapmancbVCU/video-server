@@ -22,6 +22,10 @@ class MDT20261121190922CreateVideoTable extends Migration {
             $table->timestamps();
             $table->softDeletes();
             $table->index('user_id');
+            $table->string('length');
+            $table->integer('width');
+            $table->integer('height');
+            $table->text('description');
         });
     }
 
