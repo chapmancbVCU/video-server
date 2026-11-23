@@ -1,9 +1,14 @@
+import { route } from "@chappy/utils";
 import React from "react";
 function Index() {
 
     return (
         <>
-            <h1 className="text-center">Video Center</h1>
+            <h1 className="text-center">Video Center
+                <a href={route('video.create')} className="btn btn-primary btn-sm ms-3">
+                    <i className="fa fa-camera"></i> Create Video
+                </a>
+            </h1>
         </>
     );
 }        
