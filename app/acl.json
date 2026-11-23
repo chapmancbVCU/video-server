@@ -10,7 +10,8 @@
             "Auth" : ["login", "register", "resetPassword"]
         },
         "Auth" : ["logout"],
-        "Profile" : ["*"]
+        "Profile" : ["*"],
+        "Video" : ["index"]
     },
     "Admin" : {
         "denied" : {},
