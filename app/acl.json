@@ -11,7 +11,7 @@
         },
         "Auth" : ["logout"],
         "Profile" : ["*"],
-        "Video" : ["index"]
+        "Video" : ["create", "index"]
     },
     "Admin" : {
         "denied" : {},
