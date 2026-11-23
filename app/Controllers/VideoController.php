@@ -6,6 +6,10 @@ use Core\Controller;
  * Undocumented class
  */
 class VideoController extends Controller {
+    public function indexAction(): void {
+        $this->view->renderJsx('video.Index');
+    }
+    
     /**
      * Runs when the object is constructed.
      *
