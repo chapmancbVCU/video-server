@@ -1,13 +1,25 @@
 <?php
 namespace App\Controllers;
 use Core\Controller;
-
+use App\Models\Video;
 /**
  * Undocumented class
  */
 class VideoController extends Controller {
     public function createAction(): void {
-        $this->view->renderJsx('video.Create');
+        $video = new Video();
+
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+
+            if($video->save()) {}
+        }
+
+        $props = [
+            'video' => $video,
+            'errors' => $video->getErrorMessages()
+        ];
+        $this->view->renderJsx('video.Create', $props);
     }
 
     public function indexAction(): void {
