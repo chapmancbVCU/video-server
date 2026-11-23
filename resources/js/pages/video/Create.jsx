@@ -3,7 +3,7 @@ function Create() {
 
     return (
         <>
-        
+            <h1 className="text-center">Upload a Video</h1>
         </>
     );
 }        
