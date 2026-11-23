@@ -3,7 +3,7 @@ function Index() {
 
     return (
         <>
-            <h1>Video</h1>
+            <h1 className="text-center">Video Center</h1>
         </>
     );
 }        
