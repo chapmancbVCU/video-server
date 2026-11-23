@@ -18,7 +18,7 @@ class MDT20261121190922CreateVideoTable extends Migration {
             $table->id();
             $table->string('url', 255);
             $table->integer('user_id');
-            $table->string('name', 255);
+            $table->string('title', 255);
             $table->timestamps();
             $table->softDeletes();
             $table->index('user_id');

@@ -48,7 +48,7 @@ class Video extends Model {
     public int $height;
     public int $id;
     public ?string $length = null;
-    public ?string $name = null;
+    public ?string $title = null;
     public ?string $url = null;
     public int $user_id;
     public int $width;
