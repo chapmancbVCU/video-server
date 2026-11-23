@@ -7,7 +7,7 @@ use Core\Controller;
  */
 class VideoController extends Controller {
     public function createAction(): void {
-        
+        $this->view->renderJsx('video.Create');
     }
 
     public function indexAction(): void {
