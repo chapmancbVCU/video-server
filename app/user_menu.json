@@ -2,6 +2,7 @@
     "Login" : "auth/login",
     "Register" : "auth/register",
     "%USERNAME%" : {
+      "Videos" : "video/index",
       "Profile" : "profile",
       "Logout" : "auth/logout"
     }
