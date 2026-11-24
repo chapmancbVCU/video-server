@@ -1,5 +1,7 @@
 <?php
 namespace App\Models;
+
+use Core\Lib\FileSystem\Uploads;
 use Core\Model;
 
 /**
@@ -40,7 +42,7 @@ class Video extends Model {
     protected static int $maxAllowedFileSize = 5242880000;
 
     // Set your file path.  Include your bucket if necessary.
-    protected static string $_uploadPath = "";
+    protected static string $_uploadPath = "user_";
     
     // Fields from your database
     public int $deleted = 0;
@@ -93,7 +95,7 @@ class Video extends Model {
      *
      * @return void
      */
-    public static function uploadFile(): void {
+    public static function uploadFile(int $userId, Uploads $uploads): void {
         // Implement your function
     }
 }
