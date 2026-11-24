@@ -9,7 +9,7 @@ use Core\Services\AuthService;
  * Undocumented class
  */
 class VideoController extends Controller {
-    public function createAction(): void {
+    public function createAction(int $id): void {
         $video = new Video();
 
         if($this->request->isPost()) {
@@ -43,6 +43,7 @@ class VideoController extends Controller {
         $user = AuthService::currentUser();
         if($this->request->isPost()) {
             $this->request->csrfCheck();
+
             $upload = Uploads::handleUpload(
                 'videoName',
                 Video::class,
@@ -50,8 +51,12 @@ class VideoController extends Controller {
                 "500MB",
                 $video
             );
-            dd($upload);
-            //if($video->save()) {}
+            // if($video->save()) {}
+            if($upload) {
+                redirect('video.create', [$video->id]);
+            }
+            
+            $video->addErrorMessage('You must choose a video to upload');
         }
 
         $props = [
