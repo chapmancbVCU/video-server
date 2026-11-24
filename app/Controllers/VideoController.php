@@ -2,6 +2,9 @@
 namespace App\Controllers;
 use Core\Controller;
 use App\Models\Video;
+use Core\Lib\FileSystem\Uploads;
+use Core\Services\AuthService;
+
 /**
  * Undocumented class
  */
@@ -36,6 +39,25 @@ class VideoController extends Controller {
     }
 
     public function uploadAction(): void {
-        $this->view->renderJsx('video.Upload');
+        $video = new Video();
+        $user = AuthService::currentUser();
+        if($this->request->isPost()) {
+            $this->request->csrfCheck();
+            $upload = Uploads::handleUpload(
+                'videoName',
+                Video::class,
+                env('S3_BUCKET') . 'uploads',
+                "500MB",
+                $video
+            );
+            dd($upload);
+            //if($video->save()) {}
+        }
+
+        $props = [
+            'video' => $video,
+            'errors' => $video->getErrorMessages()
+        ];
+        $this->view->renderJsx('video.Upload', $props);
     }
 }
