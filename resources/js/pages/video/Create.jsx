@@ -16,7 +16,7 @@ function Create({ errors, video }) {
             <div className="col-md-6 bg-light p-3">
                 <h1 className="text-center">New Video Details</h1>
                 <hr />
-                <form className="form" action="" method="post" encType="multipart/form-data">
+                <form className="form" action="" method="post">
                     <CSRFInput />
                     <DisplayErrors errors={errors} />
                     <Text 
