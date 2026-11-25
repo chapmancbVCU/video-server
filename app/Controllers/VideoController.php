@@ -9,8 +9,8 @@ use Core\Services\AuthService;
  * Undocumented class
  */
 class VideoController extends Controller {
-    public function createAction(): void {
-        $video = new Video();
+    public function createAction(int $video_id): void {
+        $video = Video::findById($video_id);
 
         if($this->request->isPost()) {
             $this->request->csrfCheck();
@@ -53,8 +53,8 @@ class VideoController extends Controller {
             );
 
             if($upload) {
-                Video::uploadFile($user->id, $upload);
-                redirect('video.create');
+                Video::uploadFile($video, $user->id, $upload);
+                redirect('video.create', [$video->id]);
             }
             
             $video->addErrorMessage('You must choose a video to upload');

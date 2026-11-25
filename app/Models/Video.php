@@ -47,13 +47,13 @@ class Video extends Model {
     // Fields from your database
     public int $deleted = 0;
     public ?string $description = null;
-    public int $height;
+    public int $height = 0;
     public int $id;
     public ?string $length = null;
     public ?string $title = null;
     public ?string $url = null;
     public int $user_id;
-    public int $width;
+    public int $width = 0;
 
     public function afterDelete(): void {
         // Implement your function
@@ -95,17 +95,15 @@ class Video extends Model {
      *
      * @return void
      */
-    public static function uploadFile(int $user_id, Uploads $uploads): void {
+    public static function uploadFile(Video &$video, int $user_id, Uploads $uploads): void {
         $path = self::$_uploadPath.$user_id.DS;
-        foreach($uploads->getFiles() as $file) {
-            $uploadName = $uploads->generateUploadFilename($file['name']);
-            $video = new self();
-            $video->url = $path . $uploadName;
-            $video->name = $uploadName;
-            $video->user_id = $user_id;
-            if($video->save()) {
-                $uploads->upload($path, $uploadName, $file['tmp_name']);
-            }
+        $file = $uploads->getFiles();
+        $uploadName = $uploads->generateUploadFilename($file[0]['name']);
+        $video->url = $path . $uploadName;
+        $video->name = $uploadName;
+        $video->user_id = $user_id;
+        if($video->save()) {
+            $uploads->upload($path, $uploadName, $file[0]['tmp_name']);
         }
     }
 }
