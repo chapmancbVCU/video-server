@@ -42,7 +42,7 @@ class Video extends Model {
     protected static int $maxAllowedFileSize = 5242880000;
 
     // Set your file path.  Include your bucket if necessary.
-    protected static string $_uploadPath = "user_";
+    protected static string $_uploadPath =  'uploads' . DS. "user_";
     
     // Fields from your database
     public int $deleted = 0;
@@ -95,7 +95,17 @@ class Video extends Model {
      *
      * @return void
      */
-    public static function uploadFile(int $userId, Uploads $uploads): void {
-        // Implement your function
+    public static function uploadFile(int $user_id, Uploads $uploads): void {
+        $path = self::$_uploadPath.$user_id.DS;
+        foreach($uploads->getFiles() as $file) {
+            $uploadName = $uploads->generateUploadFilename($file['name']);
+            $video = new self();
+            $video->url = $path . $uploadName;
+            $video->name = $uploadName;
+            $video->user_id = $user_id;
+            if($video->save()) {
+                $uploads->upload($path, $uploadName, $file['tmp_name']);
+            }
+        }
     }
 }

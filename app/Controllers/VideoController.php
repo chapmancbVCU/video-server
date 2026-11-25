@@ -9,7 +9,7 @@ use Core\Services\AuthService;
  * Undocumented class
  */
 class VideoController extends Controller {
-    public function createAction(int $id): void {
+    public function createAction(): void {
         $video = new Video();
 
         if($this->request->isPost()) {
@@ -47,13 +47,14 @@ class VideoController extends Controller {
             $upload = Uploads::handleUpload(
                 'videoName',
                 Video::class,
-                env('S3_BUCKET') . 'uploads',
+                env('S3_BUCKET'),
                 "500MB",
                 $video
             );
-            // if($video->save()) {}
+
             if($upload) {
-                redirect('video.create', [$video->id]);
+                Video::uploadFile($user->id, $upload);
+                redirect('video.create');
             }
             
             $video->addErrorMessage('You must choose a video to upload');
