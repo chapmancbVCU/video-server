@@ -11,7 +11,8 @@
   ],
   "require": {
     "php": ">=8.4",
-      "chappy-php/chappy-php-framework": "^4.0"
+      "chappy-php/chappy-php-framework": "^4.0",
+    "php-ffmpeg/php-ffmpeg": "^1.5"
   },
   "autoload": {
     "psr-4": {

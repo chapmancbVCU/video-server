@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Core\Lib\FileSystem\Uploads;
 use Core\Model;
-
+use FFMpeg\FFProbe;
 /**
  * Implements features of the Video class.
  */
@@ -71,6 +71,24 @@ class Video extends Model {
         // Implement your function
     }
 
+    public static function dimension(string $path): \FFMpeg\Coordinate\Dimension {
+        $ffprobe = FFProbe::create();
+        return $ffprobe
+            ->streams(env('S3_BUCKET').$path)
+            ->videos()
+            ->first()
+            ->getDimensions();
+    }
+
+    public static function duration(string $path): string {
+        $ffprobe = FFProbe::create();
+        $duration = $ffprobe
+            ->format(env('S3_BUCKET').$path)
+            ->get('duration');
+        $seconds = (int) round($duration);
+        return gmdate($seconds >= 3600 ? 'H:i:s' : 'i:s', $seconds);
+    }
+    
     /**
      * Getter function for $allowedFileTypes array
      *
@@ -102,8 +120,12 @@ class Video extends Model {
         $video->url = $path . $uploadName;
         $video->name = $uploadName;
         $video->user_id = $user_id;
-        if($video->save()) {
-            $uploads->upload($path, $uploadName, $file[0]['tmp_name']);
-        }
+        $uploads->upload($path, $uploadName, $file[0]['tmp_name']);
+        $dimension = self::dimension($video->url);
+        $video->width = $dimension->getWidth();
+        $video->height = $dimension->getHeight();
+        $video->length = self::duration($video->url);
+        $video->save();
+        
     }
 }
